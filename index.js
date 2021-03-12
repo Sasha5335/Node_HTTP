@@ -1,43 +1,29 @@
 const http = require('http');
-const fs = require('fs');
+const fs = require('fs').promises;
 const users = [];
 const PORT = 3000;
 
 
-const requestListener = (req, res) => {
+const requestListener = async (req, res) => {
   const { method, url } = req
 
   if (method === 'GET') {
     if (url === '/') {
-      fs.readFile('./views/index.html', { encoding: 'utf-8' }, (err, data) => {
-        if (err) {
-          throw err;
-        }
-        res.end(data);
-      })
-      return
+      const data = await fs.readFile('./views/index.html', 'utf-8')
+      return res.end(data)
     }
 
     if (url === '/about.html') {
-      fs.readFile('./views/about.html', { encoding: 'utf-8' }, (err, data) => {
-        if (err) {
-          throw err;
-        }
-        res.end(data);
-      })
-      return
+      const data = await fs.readFile('./views/about.html', 'utf-8')
+      return res.end(data)
     }
 
     if (url === '/contacts.html') {
-      fs.readFile('./views/contacts.html', { encoding: 'utf-8' }, (err, data) => {
-        if (err) {
-          throw err;
-        }
-        res.end(data);
-      })
-      return
+      const data = await fs.readFile('./views/contacts.html', 'utf-8')
+      return res.end(data)
     }
   }
+
 
   if (method === 'POST') {
     if (url === '/create-user') {
